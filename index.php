@@ -1,5 +1,6 @@
 <?php
 require_once ("Controller/index.php");
+include ("DB/session.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,19 +28,25 @@ require_once ("Controller/index.php");
                     echo '<a href="genre/'.$genre["id"].'">'.$genre["name"].'</a>';
                 }
                 ?>
-<!--                <a href="#">history, historical fiction, biography</a>-->
-<!--                <a href="#">fiction</a>-->
-<!--                <a href="#">fantasy, paranormal</a>-->
-<!--                <a href="#">mystery, thriller, crime</a>-->
-<!--                <a href="#">poetry</a>-->
-<!--                <a href="#">romance</a>-->
-<!--                <a href="#">non-fiction</a>-->
-<!--                <a href="#">children</a>-->
-<!--                <a href="#">young-adult</a>-->
-<!--                <a href="#">comics, graphic</a>-->
             </div>
         </li>
-        <li class="login"><a class="active" href="#about">Login</a></li>
+        <?php
+        if (isset($_SESSION['userinfo']) && $_SESSION['userinfo'] != false){
+            ?>
+            <li class="dropdown login">
+                <a href="javascript:void(0)" class="dropbtn"><?php echo $_SESSION['userinfo'][2] ?></a>
+                <div class="dropdown-content">
+                    <a class="active" href="logout.php">  Logout</a>
+                </div>
+            </li>
+        <?php
+        }else{
+            echo '<li class="login"><a class="active" href="login.php">Login</a></li>
+                  <li class="login"><a class="active" href="register.php">Register</a></li>
+                    ';
+        }
+        ?>
+
         <div class="search-container">
             <input type="text" placeholder="Write book name to search ..." name="search" id="txt_search">
         </div>

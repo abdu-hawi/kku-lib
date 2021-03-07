@@ -1,0 +1,1 @@
+Can't add company please try again <a href="../../register.php">Register</a>

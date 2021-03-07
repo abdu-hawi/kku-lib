@@ -1,0 +1,118 @@
+html, body{
+    height: 100%;
+    margin: 0;
+}
+.header {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    /*height: 100px;*/
+    background-color: #b97a57;
+}
+p.header-join{
+    padding-top: 0;
+    margin-top: 0;
+    text-align: center;
+    font-size: 1rem;
+}
+.header-container {
+    margin: 2rem 10%;
+}
+.header-left{
+    font-size: 1.5rem;
+    color: blue;
+    float: left;
+    font-family: "Monotype Corsiva", serif;
+}
+.header-right{
+    font-size: 1rem;
+    float: right;
+    font-family: Tahoma, fantasy;
+}
+a{
+    text-decoration: none;
+}
+.container{
+    height: 100%;
+    background-image: url("../image/1.jpeg");
+    background-color: #fafafa;
+}
+.content{
+    padding-top: 5%;
+    display: table;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    margin-left: 25%;
+}
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    border: 1px solid #faab9f;
+    background-color: #f1f1f1;
+}
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    width: 50%;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+}
+.tab button:hover {
+    background-color: #994a40;
+    /*color: #f1f5e5;*/
+}
+.tab button.active {
+    background-color: #b75b50;
+}
+.tab-content {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #faab9f;
+    border-top: none;
+    background: #ffffff;
+}
+.label{
+    margin-top: 5px;
+    height: 40px;
+}
+.label input{
+    width: 80%;
+    float: right;
+    border-radius: 8px;
+    height: 30px;
+    border: 1px #603a25 solid;
+}
+.btn-company-register{
+    margin-top: 10px;
+    width: 40%;
+    height: 50px;
+    background-color: #b97a57;
+    border: 2px solid #603a25;
+    font-size: 18px;
+    color: white;
+    border-radius: 8px;
+    transition-duration: 0.4s;
+}
+.btn-company-register:hover{
+    background-color: #603a25;
+    border: 2px solid #603a25;
+    border-radius: 8px;
+}
+.form-company.label label{
+    color: #603a25;
+}
+.gender{
+    margin-left: 20%;
+    margin-top: -2%;
+}
+.gender input{
+    width: 10%;
+    float: none;
+    height: 1rem;
+}

@@ -89,6 +89,10 @@ li.dropdown {
 .nav ul li.login {
     float: right;
 }
+.nav ul li.username {
+    float: right;
+    width: 200px;
+}
 
 @media screen and (min-width: 687px) and (max-width: 909px){
     .search-container {
