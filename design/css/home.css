@@ -1,0 +1,222 @@
+.book-show-container{
+    /*margin-top: -70px;*/
+    /*position: relative;*/
+}
+::after, ::before {
+    box-sizing: border-box;
+}
+::selection {
+    background: #faab9f;
+}
+h1, h2, h3, h4, h5, h6, .fw-table .heading-row, .fw-package .fw-heading-row, .special-first-letter > p:first-of-type::first-letter, .special-heading-letter::first-letter, .woocommerce .price del, .woocommerce .price > span, .font-heading {
+    font-family: Cinzel Decorative;
+    font-style: normal;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin: 0 0 0.8em;
+    color: #222;
+    font-weight: 700;
+    line-height: 1.4;
+}
+.SpecialHeading{
+    width: 20%;
+    margin-left: 5%;
+    overflow: hidden;
+    text-align: center;
+}
+.SpecialHeading .special-title {
+    position: unset;
+    font-weight: 600;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    z-index: 1;
+}
+.SpecialHeading h1.special-title {
+    font-size: 64px;
+}
+@media screen and (min-width: 1199px) and (max-width: 1499px){
+    .SpecialHeading h1.special-title {
+        font-size: 56px;
+    }
+}
+.SpecialHeading .special-heading-letter::first-letter {
+    margin-right: -30px;
+    font-size: 1.9em;
+    color: #FAAB9F;
+    padding: 0 30px;
+    border: 1px solid #FAAB9F;
+}
+.SpecialHeading .special-heading-letter::first-letter {
+    color: #faab9f;
+    border: 1px solid #faab9f;
+}
+
+.book-show-img{
+    width: 100%;
+    z-index: 0;
+}
+
+/*  gallery */
+/*.flex-container {*/
+/*    display: inline-block;*/
+/*    overflow: hidden;*/
+/*    width: 15%;*/
+/*}*/
+
+div.clip, div.desc-content{
+    width: 50%;
+}
+div.desc-content{
+    float: right;
+}
+
+div.gallery {
+    margin: 5px;
+    border: 1px solid #faab9f;
+    float: left;
+    width: 30%;
+    height: auto;
+    /*min-height: 383px;*/
+    border-radius: 5px;
+}
+
+div.gallery:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border: 1px solid #fa7a6a;
+    border-radius: 5px;
+}
+
+div.gallery img {
+    /*width: 100%;*/
+    /*height: auto;*/
+    /*min-height: 310px;*/
+    width: 100%;
+    height: 220px;
+    border-radius: 5px 5px 0 0;
+}
+
+div.desc {
+    padding: 15px;
+    text-align: center;
+    line-height: 1.5em;
+    height: 2.0em;
+    overflow: hidden;
+}
+.SpecialHeading h3.special-title {
+    font-size: 46px;
+}
+
+div.topic{
+    text-align: center;
+    margin: 50px 0 40px 0;
+    /*-webkit-transform: translateZ(0);*/
+    /*transform: translateZ(0);*/
+    visibility: visible;
+    animation-delay: 0s;
+    animation-name: fadeInLeft;
+    width: auto;
+}
+
+#hide0,#hide1,#hide2{
+    display: none;
+}
+
+.book-panel-info-title {
+    font-size: 40px;
+}
+.dash-left::before {
+    position: absolute;
+    content: '';
+    top: 50%;
+    right: 100%;
+    height: 2px;
+    width: 40px;
+    margin-right: 10px;
+    margin-top: -1px;
+    background-color: #FAAB9F;
+}
+.dash-left {
+    position: relative;
+    margin-left: 50px;
+    font-size: 15px;
+    margin-bottom: 1em;
+}
+.BooksPanel .book-panel-info-categories {
+    font-weight: 700;
+    margin-bottom: 40px;
+}
+.dash-left.dash-dark::before {
+    background-color: #7d5f5b;
+}
+.title-book-with-author{
+    margin-bottom: 0;
+}
+.author {
+    color: #ff8a79;
+    line-height: 2.7;
+    font-weight: 500;
+}
+.genres {
+    color: #ce7e74;
+    line-height: 2.7;
+    font-weight: 500;
+}
+a{
+    text-decoration: none;
+}
+.publish{
+    font-size: 12px;
+    line-height: 2;
+    margin-bottom: 3em;
+}
+div.btn-read button {
+    letter-spacing: 2px;
+    padding: 6px 10px;
+    background: #fabdb5;
+    font-size: 17px;
+    border: #ce7e74 1px solid;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 6em;
+    text-transform: uppercase;
+}
+div.btn-read button:hover {
+    background: #faab9f;
+}
+
+div.btn-more-book button{
+    overflow: visible;
+    -webkit-appearance: button;
+    max-width: 100%;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    line-height: 1.42857143;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-align: center;
+    font-family: 'Gentium Basic', serif;
+    font-style: normal;
+    margin: 20px 30px 20px 0;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    color: #000;
+    background: transparent;
+    transition: .1s;
+    border: 1px solid #232323;
+    padding: 15px 35px;
+    border-radius: 0;
+    bottom: 0;
+}
+
+div.btn-more-book button:hover{
+    background: #faab9f;
+    border: 1px solid #faab9f;
+    color: #fafafa;
+    outline: 0;
+    text-decoration: none;
+}
