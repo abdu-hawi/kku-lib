@@ -82,7 +82,7 @@ function get_book(){
     $i=0;
     while($fetch = mysqli_fetch_assoc($result)){
         $arr['id'] = $fetch['id'];
-        $arr['link'] = $fetch['link'];
+//        $arr['link'] = $fetch['link'];
         $arr['publisher'] = $fetch['publisher'];
         $arr['num_pages'] = $fetch['num_pages'];
         $arr['image_url'] = $fetch['image_url'];
@@ -90,7 +90,7 @@ function get_book(){
         $arr['authors']=$fetch['author'];
         $arr['genres']=$fetch['genres'];
         $arr['rate']=$fetch['rate'];
-        $arr['count']=$fetch['count'];
+//        $arr['count']=$fetch['count'];
         array_push($books,$arr);
         $i++;
     }

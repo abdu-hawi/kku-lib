@@ -1,4 +1,5 @@
 <?php
+include ("DB/session.php");
 $id =  $_GET["id"];
 require_once ("DB/book.php");
 require_once ("Controller/geners.php");
@@ -35,7 +36,22 @@ $book = get_book_by_id($id);
                 ?>
             </div>
         </li>
-        <li class="login"><a class="active" href="#about">Login</a></li>
+        <?php
+        if (isset($_SESSION['userinfo']) && $_SESSION['userinfo'] != false){
+            ?>
+            <li class="dropdown login">
+                <a href="javascript:void(0)" class="dropbtn"><?php echo $_SESSION['userinfo'][2] ?></a>
+                <div class="dropdown-content">
+                    <a class="active" href="logout.php">  Logout</a>
+                </div>
+            </li>
+            <?php
+        }else{
+            echo '<li class="login"><a class="active" href="login.php">Login</a></li>
+                  <li class="login"><a class="active" href="register.php">Register</a></li>
+                    ';
+        }
+        ?>
         <div class="search-container">
             <input type="text" placeholder="Write book name to search ..." name="search" id="txt_search">
         </div>

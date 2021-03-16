@@ -1,6 +1,6 @@
 <?php
-require_once ("Controller/index.php");
 include ("DB/session.php");
+require_once ("Controller/index.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -80,10 +80,41 @@ include ("DB/session.php");
             <h2 class="book-panel-info-title title-book-with-author">
                 <?php echo $books[$b]["title"]; ?>
             </h2>
-            <span class="author">By: <?php echo $books[$b]["authors"]; ?></span>
+            <span class="author">By: <?php
+                if (gettype($books[$b]["authors"]) != "array")
+                    echo $books[$b]["authors"];
+                else{
+                    $cnt = count($books[$b]["authors"]);
+                    $i=1;
+                    foreach ($books[$b]["authors"] as $author){
+                        if ($cnt == $i) echo $author;
+                        else{
+                            echo $author.", ";
+                            $i++;
+                        }
+                    }
+                }
+                ?>
+            </span>
             <div class="book-panel-info-categories dash-left dash-dark">
                 <span class="dash-dark">
-                    <a class="genres" href="" rel="tag"><?php echo $books[$b]["genres"]; ?></a>
+                    <a class="genres" href="" rel="tag">
+                        <?php
+                        if (gettype($books[$b]["genres"]) != "array")
+                        echo $books[$b]["genres"];
+                        else{
+                            $cnt = count($books[$b]["genres"]);
+                            $i=1;
+                            foreach ($books[$b]["genres"] as $genre){
+                                if ($cnt == $i) echo $genre;
+                                else{
+                                    echo $genre.", ";
+                                    $i++;
+                                }
+                            }
+                        }
+                        ?>
+                    </a>
                 </span>
             </div>
             <div>

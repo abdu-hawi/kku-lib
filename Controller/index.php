@@ -1,6 +1,11 @@
 <?php
+if (isset($_SESSION['userinfo']) && $_SESSION['userinfo'] != false){
+    require ("DB/compare.php");
+    $books = getBook($_SESSION['userinfo'][0]);
+}else{
+    require ("DB/book.php");
+    $books = get_book();
+}
 //require ("DB/db.php");
-require ("DB/book.php");
 require_once ("geners.php");
 
-$books = get_book();
