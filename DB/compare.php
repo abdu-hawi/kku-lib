@@ -44,7 +44,8 @@ function getBook($uID){
         }
     }
     $reR = [];
-    $result = mysqli_query($conn, "SELECT `book_id` AS `id`, `reviews`.`id` AS `rID`,`user_id`, `publisher`, `num_pages`, `image_url`, `title`
+    $result = mysqli_query($conn, "SELECT `book_id` AS `id`, `reviews`.`id` AS `rID`,`user_id`, `publisher`, 
+						`num_pages`, `image_url`, `title`
                         FROM `reviews`
                         JOIN `books` ON `reviews`.`book_id` = `books`.`id`
                         HAVING `reviews`.`user_id` =".$rID." 
