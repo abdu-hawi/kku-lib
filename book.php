@@ -69,14 +69,20 @@ $book = get_book_by_id($id);
 
             <span class="author">By:
                 <?php
-                if (array_search("authors",$book)){
-                    for ($n=0;$n<count($book["authors"]);$n++){
-                        if ($n != count($book["authors"])-1)
-                            echo $book["authors"][$n]."&nbsp&nbsp-&nbsp&nbsp";
-                        else echo $book["authors"][$n];
-                    }
-                }
-
+				$n = 1;
+				foreach($book["authors"] as $author){
+					if ($n != count($book["authors"]))
+						echo $author."&nbsp&nbsp-&nbsp&nbsp";
+					else echo $author;
+					$n++;
+				}
+                // if (array_search("authors",$book)){
+                    // for ($n=0;$n<count($book["authors"]);$n++){
+                        // if ($n != count($book["authors"])-1)
+                            // echo $book["authors"][$n]."&nbsp&nbsp-&nbsp&nbsp";
+                        // else echo $book["authors"][$n];
+                    // }
+                // }
                 ?>
             </span>
             <div class="book-panel-info-categories dash-left dash-dark">
