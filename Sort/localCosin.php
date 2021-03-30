@@ -17,6 +17,13 @@ $matrix = [
         "b1"=>0, "b2"=>3, "b3"=>1, "b4"=>5, "b5"=>0, "b6"=>0, "b7"=>0
     ],
 ];
+
+$tempMatrix = [];
+foreach ($matrix as $user=>$values){
+    foreach ($values as $book=>$rate){
+        $tempMatrix[$book][$user] = $rate;
+    }
+}
 ?>
 
 <table border="1" style="text-align: center">
@@ -45,36 +52,70 @@ foreach ($matrix as $key=>$value){
 ?>
     </tbody>
 </table>
+<br>
+<br>
+<br>
+<table border="1" style="text-align: center">
+    <thead>
+    <tr>
+        <td width="70"></td>
+        <td width="70">User1</td>
+        <td width="70">User2</td>
+        <td width="70">User3</td>
+        <td width="70">User4</td>
+        <td width="70">User5</td>
+    </tr>
+    </thead>
+    <tbody>
+<?php
+foreach ($tempMatrix as $key=>$value){
+    echo "<tr>";
+    echo "<td>$key</td>";
+    foreach ($value as $item){
+        echo "<td>$item</td>";
+    }
+    echo "</tr>";
+}
+?>
+    </tbody>
+</table>
 
 <?php
 
 echo "<pre>";
 print_r(recommindetion($matrix,"u1"));
+print_r(recommindetion($tempMatrix,"b1", false));
 echo "</pre>";
 
-function recommindetion($matrix,$item){
+function recommindetion($matrix,$item,$isUser = true){
     $numratore = []; // ["b1" => 0, "b2" =>0 ,.....bn =>0]
     $denomiratore = [];
     foreach ($matrix as $otherItem=>$itemValue){
         if ($otherItem != $item){
-            $sim = cosinSim($matrix, $item, $otherItem);
-            foreach($matrix[$otherItem] as $book=>$rating){
-                if ($matrix[$item][$book] == 0){
-                    if (!array_key_exists($book, $numratore)){
-                        $numratore[$book] = 0;
+            if ($isUser){
+                $sim = cosinSim($matrix, $item, $otherItem);
+                foreach($matrix[$otherItem] as $book=>$rating){
+                    if ($matrix[$item][$book] == 0){
+                        if (!array_key_exists($book, $numratore)){
+                            $numratore[$book] = 0;
+                        }
+                        $numratore[$book] += $sim * $rating;
+                        if(!array_key_exists($book, $denomiratore)){
+                            $denomiratore[$book] = 0;
+                        }
+                        $denomiratore[$book] += $sim;
                     }
-                    $numratore[$book] += $sim * $rating;
-                    if(!array_key_exists($book, $denomiratore)){
-                        $denomiratore[$book] = 0;
-                    }
-                    $denomiratore[$book] += $sim;
                 }
+            }else{
+                $result[$otherItem] = cosinSim($matrix, $item, $otherItem);
             }
         }
     }
 
-    foreach($numratore as $key=>$value){
-        $result[$key] = $value/$denomiratore[$key];
+    if ($isUser){
+        foreach($numratore as $key=>$value){
+            $result[$key] = $value/$denomiratore[$key];
+        }
     }
     uasort($result, function($a,$b){
         if($a==$b) return 0;
@@ -82,8 +123,22 @@ function recommindetion($matrix,$item){
     }
     );
     return $result;
-
 }
+/*
+function recommindetionBook($matrix,$item){
+    $result = [];
+    foreach ($matrix as $otherItem=>$itemValue){
+        if ($otherItem != $item){
+            $result[$otherItem] = cosinSim($matrix, $item, $otherItem);
+        }
+    }
+    uasort($result, function($a,$b){
+        if($a==$b) return 0;
+        return ($a>$b) ? -1:1;
+    }
+    );
+    return $result;
+}*/
 
 function cosinSim($matrix, $item, $otherItem){
     $numeatore = 0;
