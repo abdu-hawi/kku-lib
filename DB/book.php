@@ -28,6 +28,7 @@ function get_book_by_id($id){
         WHERE `author_book`.`book_id` = ".$id;
     $result = mysqli_query($conn,$sql);
     $a=0;
+    $arr['authors'][$a] = "";
     while($fetch = mysqli_fetch_assoc($result)) {
         $arr['authors'][$a] = $fetch['name'];
         $a++;

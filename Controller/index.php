@@ -2,7 +2,7 @@
 if (isset($_SESSION['userinfo']) && $_SESSION['userinfo'] != false){
     // require ("DB/compare.php");
     // $books = getBook($_SESSION['userinfo'][0]);
-	require("Sort/recommender.php");
+	require("Sort/cosin.php");
 	$books = get_recomminder($_SESSION['userinfo'][0]);
 }else{
     require ("DB/book.php");
