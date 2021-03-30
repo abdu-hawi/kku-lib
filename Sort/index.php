@@ -1,4 +1,5 @@
 <?php
+$start = microtime(true);
 $conn = new mysqli("localhost","root","","book_reader")
 or dir("Can't connect to db");
 
@@ -9,7 +10,7 @@ $arrReader = [];
 while ($row = mysqli_fetch_assoc($result)){
     array_push($arrReader,$row);
 }
-echo json_encode($arrReader)."<br><br><br><br>";//
+//echo json_encode($arrReader)."<br><br><br><br>";//
 
 ////----------- 2 -------------//
 $readerRev = []; // [[id]=>[[row1],[row2]]]
@@ -28,7 +29,7 @@ foreach ($arrReader as $item){
         }
     }
 }
-echo "readerRev:<br>".json_encode($readerRev)."<br><br><br><br>";
+//echo "readerRev:<br>".json_encode($readerRev)."<br><br><br><br>";
 
 ////------------ 3 -----------//
 //foreach ($readerRev as $k=>$v){
@@ -55,9 +56,9 @@ foreach ($readerRev as $k=>$v){
         $tCnt = count($v);
     }
 }
-echo "<br><br><br>id:".$rID."<br><br>";
-echo "<br><br><br>id:".$sID."<br><br>";
-echo "<br><br><br>id:".$tID."<br><br>";
+// echo "<br><br><br>id:".$rID."<br><br>";
+// echo "<br><br><br>id:".$sID."<br><br>";
+// echo "<br><br><br>id:".$tID."<br><br>";
 //
 //
 ////------------ 5 -----------//
@@ -108,5 +109,7 @@ while ($row = mysqli_fetch_assoc($result)){
     $row['genres'] =  $genres;
     array_push($reR,$row);
 }
-
-echo "reR6:".count($reR)."<br>".json_encode($reR)."<br><br><br><br>";
+echo "total:".(microtime(TRUE) - $start);
+// echo "<pre>";
+// print_r($reR);
+// echo "</pre>";

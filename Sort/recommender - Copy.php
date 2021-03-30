@@ -1,7 +1,8 @@
 <?php 
 
-
+$start = microtime(true);
 get_reating();
+echo "total:".(microtime(TRUE) - $start);
 
 function get_reating(){
 	$conn = new mysqli("localhost","root","","book_reader") or dir("Can't connect to db");
