@@ -82,7 +82,7 @@ a{
     height: 40px;
 }
 .label input{
-    width: 80%;
+    width: 100%;
     float: right;
     border-radius: 8px;
     height: 30px;
@@ -115,4 +115,9 @@ a{
     width: 10%;
     float: none;
     height: 1rem;
+}
+.custom-select{
+    border-radius: 8px;
+    height: 30px;
+    border: 1px #603a25 solid;
 }

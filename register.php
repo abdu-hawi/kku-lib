@@ -1,10 +1,28 @@
+<?php
+require_once ("DB/db.php");
+require_once ("Controller/geners.php");
+?>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Book recommendations system</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="design/css/bootstrap-4.5.2.min.css" type="text/css">
+    <script type="text/javascript" src="design/js/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="design/js/bootstrap.bundle-4.5.2.min.js"></script>
+    <link rel="stylesheet" href="design/css/bootstrap-multiselect.css" type="text/css">
+    <script type="text/javascript" src="design/js/bootstrap-multiselect.js"></script>
     <link rel="stylesheet" href="design/css/register.css" />
     <style>
+        label{
+            display: contents;
+        }
+        input[type="checkbox"], input[type="radio"] {
+            width: auto !important;
+        }
+        .btn-group{
+            width: 100%;
+        }
         .btn-reader-register{
             margin-top: 10px;
             width: 40%;
@@ -107,6 +125,18 @@
                         <input name="email" type="email" id="email">
                     </div>
                     <div class="label">
+                        <label for="example-getting-started">Genres</label>
+                        <select name="genres[]" id="example-getting-started" multiple="multiple">
+                            <?php
+                            foreach ($genres as $genre){
+                                echo '<option value="'.$genre["id"].'">'.$genre["name"].'</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="label">
+                    </div>
+                    <div class="label">
                         <label for="age">Age</label>
                         <input name="age" type="number" id="age">
                     </div>
@@ -141,6 +171,12 @@
         evt.currentTarget.className += " active";
     }
     document.getElementById("defaultOpen").click();
+
+    $(document).ready(function() {
+        $('#example-getting-started').multiselect({
+            includeSelectAllOption: true,
+        });
+    });
 </script>
 
 </body>
