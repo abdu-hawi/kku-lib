@@ -126,7 +126,7 @@ require_once ("Controller/geners.php");
                     </div>
                     <div class="label">
                         <label for="example-getting-started">Genres</label>
-                        <select name="genres[]" id="example-getting-started" multiple="multiple">
+                        <select name="genres[]" id="example-getting-started" multiple="multiple" required>
                             <?php
                             foreach ($genres as $genre){
                                 echo '<option value="'.$genre["id"].'">'.$genre["name"].'</option>';

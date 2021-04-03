@@ -11,7 +11,7 @@ function get_recomminder($readerID){
     }
     if (count($u) < 1){
         require ("DB/book.php");
-        return get_book();
+        return get_book_by_user($readerID);
     }
 
     $query = mysqli_query($conn, "SELECT * FROM `reviews` ");
