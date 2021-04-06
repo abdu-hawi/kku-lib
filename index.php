@@ -25,7 +25,7 @@ require_once ("Controller/index.php");
             <div class="dropdown-content">
                 <?php
                 foreach ($genres as $genre){
-                    echo '<a href="genre/'.$genre["id"].'">'.$genre["name"].'</a>';
+                    echo '<a href="genres.php?genres='.$genre["id"].'">'.$genre["name"].'</a>';
                 }
                 ?>
             </div>

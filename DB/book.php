@@ -151,3 +151,43 @@ function get_book_by_user($id){
 
     return $arr;
 }
+
+function get_book_by_genres($id){
+    global $conn;
+    $arr = [];
+    $result = mysqli_query($conn, "SELECT `books`.`id`, `publisher`, `num_pages`, `image_url`, `title`, `genres_id`
+                        FROM `books` 
+                        JOIN `book_geners` ON `book_geners`.`book_id` = `books`.`id`
+                        HAVING `genres_id` = ".$id);
+    while ($row = mysqli_fetch_assoc($result)){
+        ///// authors ///////
+        $authors = [];
+        $query = mysqli_query($conn,"SELECT `name` FROM `author_book`
+					JOIN `authors` ON `author_book`.`author_id` = `authors`.`id`
+					WHERE `author_book`.`book_id` = ".$row["id"]);
+        while ($rowQuery = mysqli_fetch_assoc($query)){
+            if (!in_array($rowQuery["name"],$authors))
+                array_push($authors,$rowQuery["name"]);
+        }
+        $row['authors'] =  $authors;
+        ///  rating ////////////
+        $query = mysqli_query($conn,"SELECT AVG(`rating`) AS `rating` FROM `reviews` WHERE `book_id` = ".$row["id"]);
+        while ($rowQuery = mysqli_fetch_assoc($query)){
+            $row['rate'] =  round($rowQuery['rating']);
+        }
+        // --------------------- genres
+        $query = mysqli_query($conn,"SELECT * FROM `book_geners`
+					JOIN `geners` ON `book_geners`.`genres_id` = `geners`.`id`
+					HAVING `book_id` = ".$row["id"]);
+        $genres = [];
+        while ($rowQuery = mysqli_fetch_assoc($query)){
+            if (!in_array($rowQuery["name"],$genres))
+//                array_push($genres,$rowQuery["name"]);
+                $genres[$rowQuery["id"]] = $rowQuery["name"];
+        }
+        $row['genres'] =  $genres;
+        if (!in_array($row,$arr))
+            array_push($arr,$row);
+    }
+    return $arr;
+}
