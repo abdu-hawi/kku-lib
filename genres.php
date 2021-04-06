@@ -108,13 +108,6 @@ $books = get_book_by_genres($_GET["genres"]);
                 <div class="book-panel-info-categories dash-left dash-dark">
                 <span class="dash-dark">
                     <?php
-//                    for($i=0;$i<count($book["genres"]);$i++){
-//                        if ($i+1 != count($book["genres"]) )
-//                            echo '<a class="genres" href="" rel="tag">history</a>'." , ";
-////                        <a class="genres" href="genres.php?genres='.$genre["id"].'">'.$genre["name"].'</a>
-//                        else
-//                            echo '<a class="genres" href="" rel="tag">history</a>';
-//                    }
                     $i = 1;
                     $cnt = count($book["genres"]);
                     foreach ($book["genres"] as $id=>$name){
@@ -125,11 +118,6 @@ $books = get_book_by_genres($_GET["genres"]);
                         $i++;
                     }
                     ?>
-
-<!--                    ,-->
-<!--                    <a class="genres" href="" rel="tag">historical fiction</a>-->
-<!--                    ,-->
-<!--                    <a class="genres" href="" rel="tag">biography</a>-->
                 </span>
                 </div>
                 <div>
