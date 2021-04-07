@@ -1,18 +1,12 @@
 <?php
-require ("DB/db.php");
+require ("../DB/db.php");
+
+echo "<pre>";
+print_r(get_recomminder(4));
+echo "</pre>";
 
 function get_recomminder($readerID){
     global $conn;
-
-    $query = mysqli_query($conn, "SELECT * FROM `reviews` WHERE `user_id`=".$readerID);
-    $u = [];
-    while($row = mysqli_fetch_assoc($query)){
-        array_push($u,$row);
-    }
-    if (count($u) < 1){
-        require ("DB/book.php");
-        return get_book_by_user($readerID);
-    }
 
     $query = mysqli_query($conn, "SELECT * FROM `reviews` ");
     $matrix = [];
@@ -31,6 +25,7 @@ function get_recomminder($readerID){
             }
         }
     }
+//    return recommindetion($matrix, $readerID);
     $rec = recommindetion($matrix, $readerID);
     return get_books($rec);
 }
@@ -105,7 +100,7 @@ function get_books($rec){
             ///  rating ////////////
             $query = mysqli_query($conn,"SELECT AVG(`rating`) AS `rating` FROM `reviews` WHERE `book_id` = ".$row["id"]);
             while ($rowQuery = mysqli_fetch_assoc($query)){
-                $row['rate'] =  round($rowQuery['rating'] * 2) / 2;
+                $row['rate'] =  round($rowQuery['rating'],1);
             }
             // --------------------- genres
             $query = mysqli_query($conn,"SELECT * FROM `book_geners`

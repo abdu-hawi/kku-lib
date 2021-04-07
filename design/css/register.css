@@ -10,18 +10,27 @@ html, body{
     /*height: 100px;*/
     background-color: #b97a57;
 }
+a.login{
+    color: #000000;
+}
+a.login:hover{
+    text-decoration: none;
+    color: #fabdb5;
+}
 p.header-join{
     padding-top: 0;
     margin-top: 0;
     text-align: center;
-    font-size: 1rem;
+    font-size: 2rem;
+    font-family: "Monotype Corsiva", serif;
+    font-weight: bold;
 }
 .header-container {
     margin: 2rem 10%;
 }
 .header-left{
     font-size: 1.5rem;
-    color: blue;
+    color: #000000;
     float: left;
     font-family: "Monotype Corsiva", serif;
 }

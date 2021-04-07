@@ -52,11 +52,11 @@ require_once ("Controller/geners.php");
             Book recommendations system
         </div>
         <div class="header-right">
-            <a href="login.php">
+            <a class="login" href="login.php">
                 Sign in
             </a>
             |
-            <a href="#">
+            <a class="login" href="#">
                 Sign up
             </a>
         </div>

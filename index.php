@@ -1,6 +1,10 @@
 <?php
 include ("DB/session.php");
 require_once ("Controller/index.php");
+//echo "<pre>";
+//print_r($books);
+//echo "</pre>";
+//die();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,18 +79,19 @@ require_once ("Controller/index.php");
 
 <section>
     <div class="desc-content">
-        <?php for ($b=0;$b<count($books);$b++){ ?>
+<!--        --><?php //for ($b=0;$b<count($books);$b++){ ?>
+        <?php $b=0; foreach ($books as $book){ ?>
         <div class="" id="hide<?php echo $b; ?>" style="width: 100%">
             <h2 class="book-panel-info-title title-book-with-author">
-                <?php echo $books[$b]["title"]; ?>
+                <?php echo $book["title"]; ?>
             </h2>
             <span class="author">By: <?php
-                if (gettype($books[$b]["authors"]) != "array")
-                    echo $books[$b]["authors"];
+                if (gettype($book["authors"]) != "array")
+                    echo $book["authors"];
                 else{
-                    $cnt = count($books[$b]["authors"]);
+                    $cnt = count($book["authors"]);
                     $i=1;
-                    foreach ($books[$b]["authors"] as $author){
+                    foreach ($book["authors"] as $author){
                         if ($cnt == $i) echo $author;
                         else{
                             echo $author.", ";
@@ -100,12 +105,12 @@ require_once ("Controller/index.php");
                 <span class="dash-dark">
                     <a class="genres" href="" rel="tag">
                         <?php
-                        if (gettype($books[$b]["genres"]) != "array")
-                        echo $books[$b]["genres"];
+                        if (gettype($book["genres"]) != "array")
+                        echo $book["genres"];
                         else{
-                            $cnt = count($books[$b]["genres"]);
+                            $cnt = count($book["genres"]);
                             $i=1;
-                            foreach ($books[$b]["genres"] as $genre){
+                            foreach ($book["genres"] as $genre){
                                 if ($cnt == $i) echo $genre;
                                 else{
                                     echo $genre.", ";
@@ -119,9 +124,9 @@ require_once ("Controller/index.php");
             </div>
             <div>
                 <?php
-                $rate = round($books[$b]["rate"]);
+                $rate = round($book["rate"],1);
                 echo "
-                    <img src='design/image/$rate.png' alt='$rate' style='height: 1.3em'>
+                    <img src='design/image/".str_replace(".","_",$rate).".png' alt='$rate' style='height: 1.3em'>
                     <span>$rate</span>
                 ";
                 ?>
@@ -129,13 +134,13 @@ require_once ("Controller/index.php");
             </div>
             <hr class="genres">
             <div class="publish">
-                Paperback, <span><?php echo $books[$b]["num_pages"]; ?></span> pages
+                Paperback, <span><?php echo $book["num_pages"]; ?></span> pages
                 <div>
-                    Published by <span><?php echo $books[$b]["publisher"]; ?></span>
+                    Published by <span><?php echo $book["publisher"]; ?></span>
                 </div>
             </div>
             <div class="btn-read">
-                <a href="book.php?id=<?php echo $books[$b]["id"]; ?>" target="_blank"><button>View book</button></a>
+                <a href="book.php?id=<?php echo $book["id"]; ?>" target="_blank"><button>View book</button></a>
             </div>
 
             <div class="btn-more-book">
@@ -143,18 +148,18 @@ require_once ("Controller/index.php");
             </div>
 
         </div>
-        <?php } ?>
+        <?php $b++;} ?>
     </div>
     <div class="clip">
         <section>
-            <?php for ($b=0;$b<count($books);$b++){ ?>
+            <?php $b=0;foreach ($books as $book){ ?>
             <div class="gallery" onclick="hide(<?php echo $b; ?>)">
                 <a href="javascript:void(0)" onclick="this.preventDefault();">
-                    <img src="<?php echo $books[$b]["image_url"]; ?>" alt="Cinque Terre" width="600" height="400">
+                    <img src="<?php echo $book["image_url"]; ?>" alt="Cinque Terre" width="600" height="400">
                 </a>
-                <div class="desc"><?php echo $books[$b]["title"]; ?></div>
+                <div class="desc"><?php echo $book["title"]; ?></div>
             </div>
-            <?php } ?>
+            <?php $b++;} ?>
         </section>
     </div>
 </section>

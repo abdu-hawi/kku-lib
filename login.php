@@ -34,11 +34,11 @@
             Book recommendations system
         </div>
         <div class="header-right">
-            <a href="#">
+            <a class="login" href="#">
                 Sign in
             </a>
             |
-            <a href="register.php">
+            <a class="login" href="register.php">
                 Sign up
             </a>
         </div>

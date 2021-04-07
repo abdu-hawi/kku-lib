@@ -59,7 +59,7 @@ WHERE `reviews`.`book_id` = $id LIMIT 10 ";
 }
 function get_book(){
     global $conn;
-    $id = rand(7,94);
+    $id = rand(27,64);
     $min_max = [">","<"];
     $r_m_m = rand(0,1);
     $desc_asc = ["DESC","ASC"];
@@ -74,7 +74,7 @@ function get_book(){
             LEFT JOIN `book_geners` ON `books`.`id` = `book_geners`.`book_id` 
             INNER JOIN `geners` ON `book_geners`.`genres_id` = `geners`.`id` 
         GROUP BY `books`.`id` 
-        HAVING `books`.`id` $min_max[$r_m_m] $id 
+        HAVING `books`.`id` $min_max[$r_m_m] $id AND rate > 4
         ORDER BY `books`.`id` $desc_asc[$r_desc_asc]
         LIMIT 6";
     $result = mysqli_query($conn,$sql);
@@ -90,11 +90,15 @@ function get_book(){
         $arr['title'] = $fetch['title'];
         $arr['authors']=$fetch['author'];
         $arr['genres']=$fetch['genres'];
-        $arr['rate']=$fetch['rate'];
+        $arr['rate']=round($fetch['rate'] * 2) / 2;
 //        $arr['count']=$fetch['count'];
         array_push($books,$arr);
         $i++;
     }
+    uasort($books, function($a,$b){
+        return $b['rate']<=>$a['rate'];
+    }
+    );
     return $books;
 }
 function get_book_by_user($id){
@@ -118,7 +122,7 @@ function get_book_by_user($id){
         $cnt++; // 3
     }
 
-    $result = mysqli_query($conn, "SELECT `books`.`id` AS `id`, `publisher`, `num_pages`, `image_url`, `title`, `genres_id`, AVG(`rating`) AS `rate`
+    $result = mysqli_query($conn, "SELECT `books`.`id` AS `id`, `publisher`, `num_pages`, `image_url`, `title`, `genres_id`, ROUND(AVG(`rating`)*2)/2 AS `rate`
        FROM `books`
        LEFT JOIN `book_geners` ON `book_geners`.`book_id` = `books`.`id`
        INNER JOIN `reviews` ON `reviews`.`book_id` = `books`.`id`
@@ -171,7 +175,7 @@ function get_book_by_genres($id){
         }
         $row['authors'] =  $authors;
         ///  rating ////////////
-        $query = mysqli_query($conn,"SELECT AVG(`rating`) AS `rating` FROM `reviews` WHERE `book_id` = ".$row["id"]);
+        $query = mysqli_query($conn,"SELECT ROUND(AVG(`rating`) * 2)/2 AS `rating` FROM `reviews` WHERE `book_id` = ".$row["id"]);
         while ($rowQuery = mysqli_fetch_assoc($query)){
             $row['rate'] =  round($rowQuery['rating']);
         }
@@ -189,5 +193,9 @@ function get_book_by_genres($id){
         if (!in_array($row,$arr))
             array_push($arr,$row);
     }
+    uasort($arr, function($a,$b){
+        return $b['rate']<=>$a['rate'];
+    }
+    );
     return $arr;
 }
