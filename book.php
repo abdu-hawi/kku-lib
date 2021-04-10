@@ -9,6 +9,7 @@ $book = get_book_by_id($id);
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset='UTF-8'>
     <title></title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap" rel="stylesheet">
@@ -31,7 +32,7 @@ $book = get_book_by_id($id);
             <div class="dropdown-content">
                 <?php
                 foreach ($genres as $genre){
-                    echo '<a href="genre/'.$genre["id"].'">'.$genre["name"].'</a>';
+                    echo '<a href="genres.php?genres='.$genre["id"].'">'.$genre["name"].'</a>';
                 }
                 ?>
             </div>
@@ -88,13 +89,13 @@ $book = get_book_by_id($id);
             <div class="book-panel-info-categories dash-left dash-dark">
                 <span class="dash-dark">
                     <?php
-//                    if (array_search("genres",$book)){
+                   if (array_search("genres",$book)){
                         for ($n=0;$n<count($book["genres"]);$n++){
                             if ($n != count($book["genres"])-1)
                                 echo '<a class="genres" href="" rel="tag">'.$book["genres"][$n]."</a> ,";
                             else echo '<a class="genres" href="" rel="tag">'.$book["genres"][$n]."</a>";
                         }
-//                    }
+                   }
                     ?>
 <!--                    <a class="genres" href="" rel="tag">history</a>-->
 <!--                    ,-->
@@ -126,6 +127,39 @@ $book = get_book_by_id($id);
                 <p>
                     <?php echo $book["description"]; ?>
                 </p>
+            </div>
+
+            <div class="description info-box-panel info-box-panel-description entry-content">
+                <div class="ElementHeading">
+                    <h2 class="element-title">
+                        Write your review
+                    </h2>
+                </div>
+                <div style="display: inline-block;width: 100%;">
+                    <div class="rating">
+                        <span class="ion-android-star-outline s5" onclick="setRating(5)"></span>
+                        <span class="ion-android-star-outline s4" onclick="setRating(4)"></span>
+                        <span class="ion-android-star-outline s3" onclick="setRating(3)"></span>
+                        <span class="ion-android-star-outline s2" onclick="setRating(2)"></span>
+                        <span class="ion-android-star-outline s1" onclick="setRating(1)"></span>
+                    </div>
+                    <br>
+
+                    <div style="width: 100%;margin-top: 3em;display: block ruby;">
+                        <form id="form">
+                            <input type="hidden" name="rate" value="" id="rate" style="width: 100%"/>
+                            <input type="hidden" name="book_id" value="<?php echo $book["id"]; ?>" style="width: 100%" id="book_id"/>
+                            <input type="hidden" name="user_id" id="user_id" value="<?php if ($_SESSION['userinfo'] != false) echo $_SESSION['userinfo'][0] ?>"/>
+                            <label for="review_text">Write your review: </label>
+                            <textarea name="review_text" contenteditable="true" class="text-area"
+                                      id="review_text" rows="8" cols="50" style="width: 100%"></textarea>
+                        </form>
+                    </div>
+                    <div class="btn-read" style="width: 100%;margin-top: 0.3em;display: block ruby;">
+                        <button onclick="formRating()">Submit</button>
+                    </div>
+                </div>
+                
             </div>
 
             <div class="description info-box-panel info-box-panel-description special-first-letter entry-content">
@@ -170,7 +204,9 @@ $book = get_book_by_id($id);
         </section>
     </div>
 </section>
-
+<?php
+include("footer.php");
+?>
 <script src="design/js/jquery.min.js"></script>
 <script>
     $("#txt_search").keyup(function() {
@@ -212,6 +248,56 @@ $book = get_book_by_id($id);
         $("#searchResult").empty();
         var redirectWindow = window.open('book.php?id='+id, '_self');
         redirectWindow.location;
+    }
+
+    function setRating(e){
+        for (var i = 1 ; i<6 ; i++){
+            var r = $(".s"+i);
+            r.removeClass("ion-android-star-outline");
+            r.removeClass("ion-android-star");
+            if (i<=e){
+                r.addClass("ion-android-star");
+            }else{
+                r.addClass("ion-android-star-outline");
+            }
+        }
+        $("#rate").val(e)
+    }
+
+    function formRating(){
+        if ($("#user_id").val().trim().length < 1){
+            alert("Please login to make review")
+            return
+        }
+        if ($("#rate").val().trim().length < 1){
+            alert("Please make rate")
+            return
+        }
+        if ($("#book_id").val().trim().length < 1){
+            alert("Something wrong, please refresh page")
+            return
+        }
+        if ($("#review_text").val().trim().length < 1){
+            alert("Please write your review")
+            return
+        }
+        // var form= $("#form");
+        $.ajax({
+            type: "POST",
+            url: "Controller/review.php",
+            data: $("#form").serialize(),
+            dataType: "json",
+            success: function (data) {
+                if (data.result) {
+                    alert("Your review adding success")
+                    setRating(0)
+                    $("#review_text").val("")
+                }else{
+                    alert("Your review not adding")
+                }
+
+            }
+        });
     }
 </script>
 </body>

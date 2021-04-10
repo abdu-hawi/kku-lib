@@ -1,7 +1,7 @@
 <?php
 require ("DB/db.php");
 
-function get_recomminder($readerID){
+function get_recomminder($readerID, $isFull = false){
     global $conn;
 
     $query = mysqli_query($conn, "SELECT * FROM `reviews` WHERE `user_id`=".$readerID);
@@ -11,7 +11,7 @@ function get_recomminder($readerID){
     }
     if (count($u) < 1){
         require ("DB/book.php");
-        return get_book_by_user($readerID);
+        return get_book_by_user($readerID, $isFull);
     }
 
     $query = mysqli_query($conn, "SELECT * FROM `reviews` ");
@@ -32,7 +32,7 @@ function get_recomminder($readerID){
         }
     }
     $rec = recommindetion($matrix, $readerID);
-    return get_books($rec);
+    return get_books($rec, $isFull);
 }
 function cosinSim($matrix, $item, $otherItem){
     $numeatore = 0;
@@ -84,12 +84,12 @@ function recommindetion($matrix,$item,$isUser = true){
     return $result;
 }
 
-function get_books($rec){
+function get_books($rec, $isFull){
     $i = 1;
     $reR = [];
     global $conn;
     foreach($rec as $book_id=>$rating){
-        if($i > 6) {break;}
+        if($i > 6 && !$isFull) {break;}
         $result = mysqli_query($conn, "SELECT `id`, `publisher`, `num_pages`, `image_url`, `title`
                         FROM `books` WHERE `id` = $book_id");
         while ($row = mysqli_fetch_assoc($result)){

@@ -144,7 +144,7 @@ require_once ("Controller/index.php");
             </div>
 
             <div class="btn-more-book">
-                <a href="" target="_blank"><button>View more book</button></a>
+                <a href="books.php" target="_blank"><button>View more book</button></a>
             </div>
 
         </div>
@@ -163,7 +163,9 @@ require_once ("Controller/index.php");
         </section>
     </div>
 </section>
-
+<?php
+include("footer.php");
+?>
 <script src="design/js/jquery.min.js"></script>
 <script>
     const img = document.getElementById("img");

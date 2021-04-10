@@ -1,3 +1,4 @@
+@import "http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css";
 .book-show-container{
     /*margin-top: -70px;*/
     /*position: relative;*/
@@ -229,4 +230,42 @@ p {
     padding-left: 50px;
     padding-right: 50px;
     margin-top: 5%;
+}
+
+.rating{
+    direction: rtl;
+    position: absolute;
+}
+.rating span{
+    display: inline-block;
+    position: relative;
+    /*width: 1em;*/
+    font-size: 40px!important;
+    color: #faab9f;
+    transition: 0.3s all;
+}
+.rating span:hover{
+    color: #faab9f;
+}
+.rating > span:hover:before,
+.rating > span:hover ~ span:before {
+    color: #faab9f;
+    content: "\f2fc";
+}
+textarea.text-area{
+    border: #faab9f 1px solid;
+    border-radius: 5px;
+}
+div.btn-read button {
+    letter-spacing: 2px;
+    padding: 6px 10px;
+    background: #fabdb5;
+    font-size: 17px;
+    border: #ce7e74 1px solid;
+    cursor: pointer;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+div.btn-read button:hover {
+    background: #faab9f;
 }

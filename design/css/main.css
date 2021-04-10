@@ -167,3 +167,11 @@ section{
 #searchResult li:hover{
     cursor: pointer;
 }
+
+div.footer{
+    box-shadow: 4px 0 4px 2px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+div.footer-element{
+    transform: translate(0, 100%);
+}

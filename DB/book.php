@@ -43,8 +43,8 @@ function get_book_by_id($id){
         $a++;
     }
     $sql = "SELECT `rating`, `review_text`,`username`  FROM `reviews` 
-JOIN `reader` ON `reviews`.`user_id` = `reader`.`reader_id`
-WHERE `reviews`.`book_id` = $id LIMIT 10 ";
+        JOIN `reader` ON `reviews`.`user_id` = `reader`.`reader_id`
+        WHERE `reviews`.`book_id` = $id ";//LIMIT 10  ";
     $result = mysqli_query($conn,$sql);
     $a=0;
     $rev = [];
@@ -57,13 +57,18 @@ WHERE `reviews`.`book_id` = $id LIMIT 10 ";
     }
     return $arr;
 }
-function get_book(){
+function get_book($isFull = false){
     global $conn;
     $id = rand(27,64);
     $min_max = [">","<"];
     $r_m_m = rand(0,1);
     $desc_asc = ["DESC","ASC"];
     $r_desc_asc = rand(0,1);
+    $str = "";
+    if (!$isFull)
+        $str = "HAVING `books`.`id` $min_max[$r_m_m] $id AND rate > 4
+        ORDER BY `books`.`id` $desc_asc[$r_desc_asc]
+        LIMIT 6";
     $sql = "SELECT `books`.`id` AS `id`, `link`, `publisher`, `num_pages`, `image_url`, `title`,
        `geners`.`name` AS `genres`, `authors`.`name` AS `author`, AVG(`rating`) AS `rate`,
        COUNT(`rating`) AS `count` 
@@ -73,10 +78,7 @@ function get_book(){
             INNER JOIN `reviews` ON `books`.`id` = `reviews`.`book_id` 
             LEFT JOIN `book_geners` ON `books`.`id` = `book_geners`.`book_id` 
             INNER JOIN `geners` ON `book_geners`.`genres_id` = `geners`.`id` 
-        GROUP BY `books`.`id` 
-        HAVING `books`.`id` $min_max[$r_m_m] $id AND rate > 4
-        ORDER BY `books`.`id` $desc_asc[$r_desc_asc]
-        LIMIT 6";
+        GROUP BY `books`.`id` ".$str;
     $result = mysqli_query($conn,$sql);
     $arr = [];
     $books = [];
@@ -101,7 +103,8 @@ function get_book(){
     );
     return $books;
 }
-function get_book_by_user($id){
+
+function get_book_by_user($id, $isFull){
     global $conn;
 
     $result = mysqli_query($conn,"SELECT `genres_id` FROM `reader_genres` WHERE `reader_id` = ".$id);
@@ -121,15 +124,16 @@ function get_book_by_user($id){
         }
         $cnt++; // 3
     }
-
+    $str = "";
+    if (!$isFull)
+        $str = " LIMIT 6";
     $result = mysqli_query($conn, "SELECT `books`.`id` AS `id`, `publisher`, `num_pages`, `image_url`, `title`, `genres_id`, ROUND(AVG(`rating`)*2)/2 AS `rate`
        FROM `books`
        LEFT JOIN `book_geners` ON `book_geners`.`book_id` = `books`.`id`
        INNER JOIN `reviews` ON `reviews`.`book_id` = `books`.`id`
        GROUP BY `id`
        ".$genStr."
-       ORDER BY `rating` DESC
-       LIMIT 6");
+       ORDER BY `rating` DESC ".$str);
     while ($row = mysqli_fetch_assoc($result)){
         ///// authors ///////
         $authors = [];
