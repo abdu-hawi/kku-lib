@@ -2,6 +2,9 @@
 require ("../DB/db.php");
 
 $get = get_recomminder(4);
+echo "<pre>";
+print_r($get);
+echo "</pre>";
 ?>
     <table border="1" style="text-align: center">
         <thead>
@@ -56,19 +59,26 @@ function get_recomminder($readerID){
             }
         }
     }
-    return["matrix"=>$matrix,"books"=>$books];
-//    return recommindetion($matrix, $readerID);
+//    return["matrix"=>$matrix,"books"=>$books]; // لمشاهدة الماتركس
+//    return recommindetion($matrix, $readerID); // لمشاهدة اقرب كتب الى المستخدم
     $rec = recommindetion($matrix, $readerID);
-    return get_books($rec);
+    return get_books($rec); // لارجاع بيانات الكتب
 }
 function cosinSim($matrix, $item, $otherItem){
     $numeatore = 0;
     $denItem = 0;
     $denOtherItem = 0;
-    foreach ($matrix[$item] as $key=>$value){
-        $numeatore += $value * $matrix[$otherItem][$key];
-        $denItem += pow($value,2); // u1
-        $denOtherItem += pow($matrix[$otherItem][$key],2); // other item
+    /*
+    matrix = [
+                "u1" => ["b1"="rate", "b2"=>"rate", ...., "b100"=>"rate"]
+                "u2" => ["b1"="rate", "b2"=>"rate", ...., "b100"=>"rate"]
+             ]
+    */
+    //                        key = book_id
+    foreach ($matrix[$item] as $book_id=>$rate){
+        $numeatore += $rate * $matrix[$otherItem][$book_id];
+        $denItem += pow($rate,2); // u1
+        $denOtherItem += pow($matrix[$otherItem][$book_id],2); // other item
     }
     return $numeatore / ( sqrt($denItem) * sqrt($denOtherItem) );
 }
@@ -76,12 +86,22 @@ function cosinSim($matrix, $item, $otherItem){
 function recommindetion($matrix,$item,$isUser = true){
     $numratore = []; // ["b1" => 0, "b2" =>0 ,.....bn =>0]
     $denomiratore = [];
+    /*
+    matrix = [
+                "u1" => ["b1"="rate", "b2"=>"rate", ...., "b100"=>"rate"]
+                "u2" => ["b1"="rate", "b2"=>"rate", ...., "b100"=>"rate"]
+
+                "u1" => ["b1"="2", "b2"=>"0", "b3"=>"0", ...., "b100"=>"rate"]
+                "u2" => ["b1"="4", "b2"=>"5", "b3"=>"2", ...., "b100"=>"rate"]
+                "u3" => ["b1"="4", "b2"=>"2", "b3"=>"5", ...., "b100"=>"rate"]
+             ]
+    */
     foreach ($matrix as $otherItem=>$itemValue){
         if ($otherItem != $item){
             if ($isUser){
                 $sim = cosinSim($matrix, $item, $otherItem);
                 foreach($matrix[$otherItem] as $book=>$rating){
-                    if ($matrix[$item][$book] == 0){
+                    if ($matrix[$item][$book] === 0){
                         if (!array_key_exists($book, $numratore)){
                             $numratore[$book] = 0;
                         }
@@ -97,7 +117,6 @@ function recommindetion($matrix,$item,$isUser = true){
             }
         }
     }
-
     if ($isUser){
         foreach($numratore as $key=>$value){
             $result[$key] = $value/$denomiratore[$key];
@@ -144,9 +163,9 @@ function get_books($rec){
             }
             $row['genres'] =  $genres;
             array_push($reR,$row);
-        }
+        } // end while ($row = mysqli_fetch_assoc($result)){
         $i++;
-    }
+    } // end foreach($rec as $book_id=>$rating){
     // mysqli_close($conn);
     uasort($reR, function($a,$b){
         return $b['rate']<=>$a['rate'];

@@ -1,17 +1,19 @@
 <?php
 require ("DB/db.php");
 
-function get_recomminder($readerID, $isFull = false){
+function get_recomminder($readerID, $isFull = false, $isUser = true){
     global $conn;
 
-    $query = mysqli_query($conn, "SELECT * FROM `reviews` WHERE `user_id`=".$readerID);
-    $u = [];
-    while($row = mysqli_fetch_assoc($query)){
-        array_push($u,$row);
-    }
-    if (count($u) < 1){
-        require ("DB/book.php");
-        return get_book_by_user($readerID, $isFull);
+    if ($isUser){
+        $query = mysqli_query($conn, "SELECT * FROM `reviews` WHERE `user_id`=".$readerID);
+        $u = [];
+        while($row = mysqli_fetch_assoc($query)){
+            array_push($u,$row);
+        }
+        if (count($u) < 1){
+            require ("DB/book.php");
+            return get_book_by_user($readerID, $isFull);
+        }
     }
 
     $query = mysqli_query($conn, "SELECT * FROM `reviews` ");
@@ -31,7 +33,7 @@ function get_recomminder($readerID, $isFull = false){
             }
         }
     }
-    $rec = recommindetion($matrix, $readerID);
+    $rec = recommindetion($matrix, $readerID, $isUser);
     return get_books($rec, $isFull);
 }
 function cosinSim($matrix, $item, $otherItem){
@@ -46,7 +48,7 @@ function cosinSim($matrix, $item, $otherItem){
     return $numeatore / ( sqrt($denItem) * sqrt($denOtherItem) );
 }
 
-function recommindetion($matrix,$item,$isUser = true){
+function recommindetion($matrix,$item,$isUser){
     $numratore = []; // ["b1" => 0, "b2" =>0 ,.....bn =>0]
     $denomiratore = [];
     foreach ($matrix as $otherItem=>$itemValue){

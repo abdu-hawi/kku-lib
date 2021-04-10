@@ -4,6 +4,8 @@ $id =  $_GET["id"];
 require_once ("DB/book.php");
 require_once ("Controller/geners.php");
 $book = get_book_by_id($id);
+require_once ("Sort/cosin.php");
+$booksRecomminder = get_recomminder($id,true,false);
 ?>
 
 <!DOCTYPE html>
@@ -128,6 +130,38 @@ $book = get_book_by_id($id);
                     <?php echo $book["description"]; ?>
                 </p>
             </div>
+
+            <div class="description info-box-panel info-box-panel-description entry-content">
+                <div class="ElementHeading">
+                    <h2 class="element-title">
+                        We are choice for you
+                    </h2>
+                </div>
+                <div class="clip">
+                    <section class="inline">
+                        <?php
+                        $j=1;
+                        foreach ($booksRecomminder as $br){
+                            if ($j>6) break;
+                            ?>
+                            <div class="gallery1">
+                                <a  href="book.php?id=<?php echo $br["id"]; ?>" target="_blank">
+                                    <img src="<?php echo $br["image_url"]; ?>" alt="Cinque Terre" width="" height="">
+                                </a>
+                                <div class="desc"><?php echo $br["title"]; ?></div>
+                            </div>
+                            <?php
+                            $j++;
+                        }
+                        ?>
+                    </section>
+                </div>
+            </div>
+
+
+
+
+
 
             <div class="description info-box-panel info-box-panel-description entry-content">
                 <div class="ElementHeading">
