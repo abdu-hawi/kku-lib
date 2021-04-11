@@ -20,7 +20,7 @@ $n_age = trim($_POST['age']);
 $n_gender = trim($_POST['gender']);
 
 $result = reader_add($n_name,$n_username,$n_pass,$n_email,$n_age,$n_gender, $_POST["genres"]);
-closeDB();
+//closeDB();
 //echo $result;
 if ($result)
     header('Location:register_success.php');

@@ -15,7 +15,7 @@ $n_pass = trim($_POST['password']);
 $n_email = trim($_POST['email']);
 
 $result = company_add($n_publish,$n_name,$n_pass,$n_email);
-closeDB();
+//closeDB();
 
 if ($result)
     header('Location:register_success.php');

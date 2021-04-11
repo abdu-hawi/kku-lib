@@ -10,7 +10,7 @@ require_once ('../companyAPI.php');
 $n_name = trim($_POST['username']);
 $n_pass = trim($_POST['password']);
 $result = company_get($n_name,$n_pass);
-closeDB();
+//closeDB();
 if (!$result){
     die("BAD ACCESS");
 }else{
