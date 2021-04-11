@@ -33,7 +33,7 @@ $booksRecomminder = get_recomminder($id,true,false);
             <a href="javascript:void(0)" class="dropbtn">Categories</a>
             <div class="dropdown-content">
                 <?php
-                foreach ($genres as $genre){
+                foreach($genres as $genre){
                     echo '<a href="genres.php?genres='.$genre["id"].'">'.$genre["name"].'</a>';
                 }
                 ?>
