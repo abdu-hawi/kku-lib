@@ -15,7 +15,7 @@ if(isset($_POST['search'])){
 
         $search_arr[] = array("id" => $id, "title" => $title);
     }
-    closeDB();
+    //closeDB();
     echo json_encode($search_arr);
 }else{
     echo json_encode(["id"=>0,"title"=>"nothing"]);

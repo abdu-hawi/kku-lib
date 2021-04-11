@@ -28,7 +28,7 @@ $booksRecomminder = get_recomminder($id,true,false);
 
 <div class="nav">
     <ul class="nav">
-        <li><a href="../library">Home</a></li>
+        <li><a href="index.php">Home</a></li>
         <li class="dropdown">
             <a href="javascript:void(0)" class="dropbtn">Categories</a>
             <div class="dropdown-content">
